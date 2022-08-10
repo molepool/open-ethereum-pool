@@ -52,7 +52,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 
 	if s.config.Proxy.Stratum.Debug {
 		actualShare, _ := new(big.Rat).SetFrac(util.Diff1, shareTarget).Float64()
-		networkDiff := h.diff.Int64() / util.Pow2x32
+		networkDiff := float64(h.diff.Int64() / util.Pow2x32)
 		log.Printf("Valid share at height %d %.4f/%.4f from %s:%s@%s", h.height, actualShare, networkDiff, login, id, ip)
 	}
 
