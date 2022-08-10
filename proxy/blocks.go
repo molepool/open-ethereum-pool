@@ -64,7 +64,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 		log.Printf("Error while Parse Uint block height")
 	}
 
-	blockTargetBytes, _ := hex.DecodeString(reply[2])
+	blockTargetBytes, _ := hex.DecodeString(strings.Replace(reply[2], "0x", "", -1))
 	blockTarget := new(big.Int).SetBytes(blockTargetBytes)
 
 	newTemplate := BlockTemplate{
