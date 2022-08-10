@@ -3,7 +3,6 @@ package proxy
 import (
 	"encoding/hex"
 	"log"
-	"math"
 	"math/big"
 	"strconv"
 	"strings"
@@ -18,7 +17,7 @@ var client = ethash.NewEthereum()
 func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, params []string, diff float64) (bool, bool) {
 	hashNoNonce := params[1]
 	mixDiges := strings.Replace(params[2], "0x", "", -1)
-	shareDiff := diff * float64(util.Pow2x32)
+	shareDiff := int64(diff * float64(util.Pow2x32))
 
 	h, ok := t.headers[hashNoNonce]
 	if !ok {
@@ -53,7 +52,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 
 	if s.config.Proxy.Stratum.Debug {
 		actualShare, _ := new(big.Rat).SetFrac(util.Diff1, shareTarget).Float64()
-		networkDiff := float64(h.diff.Int64()) / math.Pow(2, 32)
+		networkDiff := h.diff.Int64() / util.Pow2x32
 		log.Printf("Valid share at height %d %.4f/%.4f from %s:%s@%s", h.height, actualShare, networkDiff, login, id, ip)
 	}
 
@@ -66,7 +65,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 			return false, false
 		} else {
 			s.fetchBlockTemplate()
-			exist, err := s.backend.WriteBlock(login, id, params, int64(shareDiff), h.diff.Int64(), h.height, s.hashrateExpiration)
+			exist, err := s.backend.WriteBlock(login, id, params, shareDiff, h.diff.Int64(), h.height, s.hashrateExpiration)
 			if exist {
 				return true, false
 			}
@@ -78,7 +77,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 			log.Printf("Block found by miner %v@%v at height %d", login, ip, h.height)
 		}
 	} else {
-		exist, err := s.backend.WriteShare(login, id, params, int64(shareDiff), h.height, s.hashrateExpiration)
+		exist, err := s.backend.WriteShare(login, id, params, shareDiff, h.height, s.hashrateExpiration)
 		if exist {
 			return true, false
 		}
