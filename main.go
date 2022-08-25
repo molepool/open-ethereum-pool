@@ -68,7 +68,7 @@ func main() {
 		log.Printf("Running with %v threads", cfg.Threads)
 	}
 
-	backend = storage.NewRedisClient(&cfg.Redis, cfg.Coin)
+	backend = storage.NewRedisClient(&cfg.Redis, cfg.Coin, cfg.Pplns)
 	pong, err := backend.Check()
 	if err != nil {
 		log.Printf("Can't establish connection to backend: %v", err)

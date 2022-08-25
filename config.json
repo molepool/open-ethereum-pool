@@ -2,6 +2,7 @@
 	"threads": 4,
 	"coin": "eth",
 	"name": "main",
+	"pplns": 5000,
 	"proxy": {
 		"enabled": true,
 		"listen": "0.0.0.0:8888",
