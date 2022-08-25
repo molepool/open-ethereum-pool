@@ -26,25 +26,25 @@ type RedisClient struct {
 }
 
 type BlockData struct {
-	Height           int64    `json:"height"`
-	Timestamp        int64    `json:"timestamp"`
-	Difficulty       int64    `json:"difficulty"`
-	TotalShares      int64    `json:"shares"`
-	RoundShares int64    `json:"roundShares"`
-	Uncle            bool     `json:"uncle"`
-	UncleHeight      int64    `json:"uncleHeight"`
-	Orphan           bool     `json:"orphan"`
-	Hash             string   `json:"hash"`
-	Nonce            string   `json:"-"`
-	PowHash          string   `json:"-"`
-	MixDigest        string   `json:"-"`
-	Reward           *big.Int `json:"-"`
-	ExtraReward      *big.Int `json:"-"`
-	ImmatureReward   string   `json:"-"`
-	RewardString     string   `json:"reward"`
-	RoundHeight      int64    `json:"-"`
-	candidateKey     string
-	immatureKey      string
+	Height         int64    `json:"height"`
+	Timestamp      int64    `json:"timestamp"`
+	Difficulty     int64    `json:"difficulty"`
+	TotalShares    int64    `json:"shares"`
+	RoundShares    int64    `json:"roundShares"`
+	Uncle          bool     `json:"uncle"`
+	UncleHeight    int64    `json:"uncleHeight"`
+	Orphan         bool     `json:"orphan"`
+	Hash           string   `json:"hash"`
+	Nonce          string   `json:"-"`
+	PowHash        string   `json:"-"`
+	MixDigest      string   `json:"-"`
+	Reward         *big.Int `json:"-"`
+	ExtraReward    *big.Int `json:"-"`
+	ImmatureReward string   `json:"-"`
+	RewardString   string   `json:"reward"`
+	RoundHeight    int64    `json:"-"`
+	candidateKey   string
+	immatureKey    string
 }
 
 func (b *BlockData) RewardInShannon() int64 {
